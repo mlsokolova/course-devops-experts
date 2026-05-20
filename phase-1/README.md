@@ -23,20 +23,4 @@ From this directory (`phase-1/`):
 ```bash
 docker compose up --build
 ```
-Open [http://localhost:5000](http://localhost:5000).
-
-
-## Push to Docker Hub (course deliverable)
-
-Log in, tag under your Docker Hub namespace, and push (replace `YOUR_USER` and optional tag):
-
-``bash
-docker login
-docker tag quakewatch:devops-experts-phase1 YOUR_USER/quakewatch:devops-experts-phase1
-docker push YOUR_USER/quakewatch:devops-experts-phase1
-```
-
-## Notes
-
-- **Logs:** the app writes under `logs/` in the working directory; use a writable mount or `tmpfs` on `/app/logs` (as in Compose) when running read-only.
-- **Local run without Docker** (from upstream): clone the repo, `python -m venv venv`, activate it, `pip install -r requirements.txt`, then `python app.py` — see the [upstream README](https://github.com/EduardUsatchev/QuakeWatch/blob/main/README.md).
+Open [http://localhost:5000](http://localhost:5000)
