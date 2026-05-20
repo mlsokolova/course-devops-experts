@@ -1,0 +1,16 @@
+services:
+  quakewatch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quakewatch:devops-experts-phase1
+    container_name: quakewatch
+    hostname: quakewatch
+    ports:
+      - "5000:5000"
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/logs
+    security_opt:
+      - no-new-privileges:true
