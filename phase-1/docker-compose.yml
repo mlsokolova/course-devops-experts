@@ -11,6 +11,6 @@ services:
     read_only: true
     tmpfs:
       - /tmp
-      - /app/logs
+      - /QuakeWatch/logs
     security_opt:
       - no-new-privileges:true

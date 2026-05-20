@@ -46,9 +46,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 COPY --from=builder /venv /venv
-COPY --from=builder --chown=65532:65532 --chmod=777 /QuakeWatch/ /app/
+COPY --from=builder --chown=65532:65532 --chmod=777 /QuakeWatch/ /QuakeWatch/
 
-WORKDIR /app
+WORKDIR /QuakeWatch
 
 EXPOSE 5000
 
