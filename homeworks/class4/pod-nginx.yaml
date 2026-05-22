@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  volumes:
+    - name: class4-pvc
+      persistentVolumeClaim:
+        claimName: class4-pvc
+  containers:
+  - image: nginx
+    name: nginx
+    volumeMounts:
+    - mountPath: "/data"
+      name: class4-pvc
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
