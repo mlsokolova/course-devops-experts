@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: quakewatch
+  name: quakewatch
+  namespace: final-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quakewatch
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: quakewatch
+    spec:
+      containers:
+      - image: mlsokolova/quakewatch:devops-experts-phase1
+        name: quakewatch
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 35
+          timeoutSeconds: 4
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 4
+          failureThreshold: 3
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: quakewatch
+  name: quakewatch
+  namespace: final-project
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: quakewatch
+  type: NodePort
+status:
+  loadBalancer: {}
