@@ -18,7 +18,7 @@ spec:
         - key: "nginx.conf"
           path: "nginx.conf"
   containers:
-  - image: nginx
+  - image: nginx:1.31.0
     name: nginx
     volumeMounts:
     - mountPath: "/data"
