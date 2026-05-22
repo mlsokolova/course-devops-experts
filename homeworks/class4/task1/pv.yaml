@@ -4,7 +4,6 @@ metadata:
   name: class4-pv
   labels:
     type: local
-  namespace: class4
 spec:
   storageClassName: ""
   capacity:
