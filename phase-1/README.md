@@ -1,26 +1,46 @@
 # Phase 1: Foundation — Docker
 
-This folder contains Docker resources for the [QuakeWatch](https://github.com/EduardUsatchev/QuakeWatch) Flask application, per the course Phase 1 task: **Dockerfile**, **docker-compose.yml**, and this **README**.
+This folder contains Docker resources for the [QuakeWatch](https://github.com/EduardUsatchev/QuakeWatch) Flask application: **Dockerfile**, **docker-compose.yml**, and this **README**.
 
-Application source is cloned from upstream in the Docker build stage (`git clone` into `/QuakeWatch`), then copied into the final runtime image.
+Application source lives in **`Quakewatch/`** (vendored copy of the upstream repo). The image is built from the official **`python:3.11-slim`** base image: dependencies are installed from `Quakewatch/requirements.txt`, then the app files are copied into the container.
 
-## Image layout
+## Prerequisites
 
-- **Multi-stage build:** dependencies are installed in a **Debian Bookworm** builder; the runtime image is **`gcr.io/distroless/python3-debian12:nonroot`** for a minimal footprint and non-root process.
-- **Virtualenv:** a Python venv is created at **`/venv`** in the build stage and copied into the final image. The container **entrypoint uses `/venv/bin/python3`** .
-- **`HOME` / `TMPDIR`** are set to **`/tmp`** so nothing writes under `/home/nonroot`.
+- [Docker](https://docs.docker.com/get-docker/)
+- Optional: [Docker Compose](https://docs.docker.com/compose/install/) v2
 
-### Debian / distroless version alignment
+## Build the image
 
-| Stage        | Image                                      | OS / Python                         |
-| ------------ | ------------------------------------------ | ----------------------------------- |
-| Build        | `debian:bookworm-slim`                     | Debian **12** (Bookworm), Python **3.11** from Debian packages |
-| Final        | `gcr.io/distroless/python3-debian12:nonroot` | Debian **12**–based distroless, Python **3.11** |
+From this directory (`phase-1/`):
+
+```bash
+docker build -t quakewatch:devops-experts-phase1 .
+```
+
+## Run with Docker
+
+```bash
+docker run --rm -p 5000:5000 quakewatch:devops-experts-phase1
+```
+
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000).
+
+The app needs outbound **HTTPS** to reach the USGS API.
 
 ## Run with Docker Compose
 
-From this directory (`phase-1/`):
 ```bash
 docker compose up --build
 ```
-Open [http://localhost:5000](http://localhost:5000)
+
+Open [http://localhost:5000](http://localhost:5000).
+
+Compose builds the same image, maps port **5000**, and mounts a **`tmpfs`** on `Quakewatch/logs` so the app can write log files.
+
+## Project layout
+
+| Path | Purpose |
+| ---- | ------- |
+| `Quakewatch/` | Flask application (Python source, templates, static files) |
+| `Dockerfile` | Builds the image: install requirements, copy `Quakewatch/` |
+| `docker-compose.yml` | Runs the container locally |

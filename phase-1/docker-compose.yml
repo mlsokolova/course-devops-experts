@@ -3,14 +3,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: quakewatch:devops-experts-phase1
+    image: mlsokolova/quakewatch
     container_name: quakewatch
-    hostname: quakewatch
     ports:
       - "5000:5000"
-    read_only: true
+    environment:
+      MPLCONFIGDIR: /tmp/matplotlib
     tmpfs:
-      - /tmp
-      - /QuakeWatch/logs
-    security_opt:
-      - no-new-privileges:true
+      - /Quakewatch/logs
