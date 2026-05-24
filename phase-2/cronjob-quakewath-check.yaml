@@ -16,17 +16,11 @@ spec:
           restartPolicy: Never
           containers:
           - name: check
-            image: python:slim-bookworm
-            command: ["python3"]
+            image: curlimages/curl:8.20.0
+# curl -f returns 22 in case of 500 server error
+# /graph-earthquakes path returns 500 when USGS is not accessible
+# Heaviest check, but most reliable: /graph-earthquakes
             args:
-              - "-c"
-              - |
-                import json
-                import urllib.request
-                url = "http://quakewatch:5000/health"
-                with urllib.request.urlopen(url, timeout=10) as response:
-                    raw_data = response.read().decode('utf-8')
-                    data = json.loads(raw_data)
-                status = data["status"]
-                if status != "ok": exit(1)
+              - "-f"
+              - "http://quakewatch:5000/graph-earthquakes"
                 

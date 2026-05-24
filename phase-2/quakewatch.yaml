@@ -17,22 +17,21 @@ spec:
         app: quakewatch
     spec:
       containers:
-      - image: mlsokolova/quakewatch:devops-experts-phase1
+      - image: mlsokolova/quakewatch:1.0.0
         name: quakewatch
         livenessProbe:
           httpGet:
-            path: /ping
-            port: 5000
-          initialDelaySeconds: 10
-          periodSeconds: 35
-          timeoutSeconds: 4
-        readinessProbe:
-          httpGet:
-            path: /health
+            path: /
             port: 5000
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 4
+          timeoutSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
           failureThreshold: 3
 status: {}
 

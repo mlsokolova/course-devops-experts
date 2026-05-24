@@ -17,8 +17,8 @@ kubectl config set-context --current --namespace=final-project
 ## Run the dockerized web app as a pod
 
 ```bash
-docker pull mlsokolova/quakewatch:devops-experts-phase1
-kubectl run quakewatch --image=mlsokolova/quakewatch:devops-experts-phase1
+docker pull mlsokolova/quakewatch:1.0.0
+kubectl run quakewatch --image=mlsokolova/quakewatch:1.0.0
 ```
 
 ## Deploy the QuakeWatch web app
@@ -33,7 +33,3 @@ kubectl apply -f quakewatch.yaml
 kubectl apply -f cronjob-quakewath-check.yaml
 ```
 
-## TODO
-
-- Change the QuakeWatch app so demo paths are less “demo”; the `/health` path should return real local checks
-- Add a check for USGS accessibility
