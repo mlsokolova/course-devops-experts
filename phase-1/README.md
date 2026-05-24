@@ -14,13 +14,13 @@ Application source lives in **`Quakewatch/`** (vendored copy of the upstream rep
 From this directory (`phase-1/`):
 
 ```bash
-docker build -t quakewatch:devops-experts-phase1 .
+docker build -t mlsokolova/quakewatch .
 ```
 
 ## Run with Docker
 
 ```bash
-docker run --rm -p 5000:5000 quakewatch:devops-experts-phase1
+docker run --rm -p 5000:5000 mlsokolova/quakewatch
 ```
 
 Open [http://127.0.0.1:5000](http://127.0.0.1:5000).
@@ -36,6 +36,12 @@ docker compose up --build
 Open [http://localhost:5000](http://localhost:5000).
 
 Compose builds the same image, maps port **5000**, and mounts a **`tmpfs`** on `Quakewatch/logs` so the app can write log files.
+
+## Push to Docker Hub  
+```
+docker tag mlsokolova/quakewatch mlsokolova/quakewatch:1.0.0
+docker push mlsokolova/quakewatch:1.0.0
+```
 
 ## Project layout
 
