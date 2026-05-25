@@ -17,7 +17,7 @@ spec:
         app: quakewatch
     spec:
       containers:
-      - image: mlsokolova/quakewatch:1.0.0
+      - image: mlsokolova/quakewatch:2.0.0
         name: quakewatch
         resources:
           requests:
@@ -40,8 +40,12 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 3
-status: {}
-
+        env:
+        - name: QUAKEWATCH__LOG_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: quakewatch
+              key: QUAKEWATCH__LOG_PATH
 ---
 apiVersion: v1
 kind: Service

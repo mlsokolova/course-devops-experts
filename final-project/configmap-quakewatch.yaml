@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quakewatch
+  namespace: final-project
+data:
+  QUAKEWATCH__LOG_PATH: /tmp/logs

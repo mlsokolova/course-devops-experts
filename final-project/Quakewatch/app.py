@@ -14,16 +14,17 @@ def create_app():
     # -------------------------
     # Logging Configuration
     # -------------------------
-    if not os.path.exists('logs'):
-        os.makedirs('logs')
+    log_path = os.getenv('QUAKEWATCH__LOG_PATH')
+    if not os.path.exists(log_path):
+        os.makedirs(log_path)
 
-    error_handler = RotatingFileHandler('logs/error.log', maxBytes=1000000, backupCount=3)
+    error_handler = RotatingFileHandler(f'{log_path}/error.log', maxBytes=1000000, backupCount=3)
     error_handler.setLevel(logging.ERROR)
     error_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     error_handler.setFormatter(error_formatter)
     app.logger.addHandler(error_handler)
 
-    usage_handler = RotatingFileHandler('logs/access.log', maxBytes=1000000, backupCount=3)
+    usage_handler = RotatingFileHandler(f'{log_path}/access.log', maxBytes=1000000, backupCount=3)
     usage_handler.setLevel(logging.INFO)
     usage_formatter = logging.Formatter('%(asctime)s - %(message)s')
     usage_handler.setFormatter(usage_formatter)
