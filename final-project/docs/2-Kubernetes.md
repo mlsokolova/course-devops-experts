@@ -45,6 +45,6 @@ desktop-worker          31m          0%       607Mi           3%
 ## Test Horizontal Pod Autoscaler
 1. Run Apache HTTP server benchmarking tool
 `kubectl run quakewatch-benchmark -it --rm --restart=Never --image=httpd:2.4 -- ab -n 100 -c 20 -s 60 http://quakewatch:5000/graph-earthquakes`
-(100 request to the heavies page of the QuakeWatch web app, 20 requests in parallel )
+(100 request for the heavies page of the QuakeWatch web app, 20 requests in parallel )
 2. watch events
 `kubectl get events`

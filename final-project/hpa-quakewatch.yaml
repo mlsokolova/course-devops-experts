@@ -22,7 +22,7 @@ spec:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 60
+        averageUtilization: 50
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 10 # used to restrict the flapping of replica count
@@ -35,8 +35,8 @@ spec:
       stabilizationWindowSeconds: 0 
       policies:
       - type: Pods # scale up unit
-        value: 1 # scale up by 1 replicas
-        periodSeconds: 5 # time period between scale up actions
+        value: 1 # scale up by 1 replica
+        periodSeconds: 1 # time period between scale up actions
       
 
       
