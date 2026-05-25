@@ -26,3 +26,9 @@ kubectl apply -f quakewatch.yaml
 kubectl apply -f cronjob-quakewath-check.yaml
 ```
 
+## Install Metrics Server
+1. `wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.1/components.yaml`
+2. add `--kubelet-insecure-tls` arg into args section for containers  
+`componets.yaml` v0.8.1 with `--kubelet-insecure-tls` is in the root folder
+3.`kubctl apply -f componets.yaml`
+4. wait
