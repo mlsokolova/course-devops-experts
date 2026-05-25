@@ -1,12 +1,5 @@
 # Phase 2: Orchestration — Kubernetes Basics & Advanced
 
-## Files
-
-- [README.md](README.md): this file
-- `Install-kubernetes-cluster.pdf`: screenshots of the Docker Desktop installation process on Windows 11
-- `quakewatch.yaml`: Kubernetes resources for the QuakeWatch web app
-- `cronjob-quakewath-check.yaml`: Kubernetes resource definition for the CronJob
-
 ## Set up the cluster
 
 ```bash
