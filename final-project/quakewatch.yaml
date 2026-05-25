@@ -19,13 +19,20 @@ spec:
       containers:
       - image: mlsokolova/quakewatch:1.0.0
         name: quakewatch
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: "250Mi"
+          limits:
+            cpu: "1"
+            memory: "500Mi"
         livenessProbe:
           httpGet:
             path: /
             port: 5000
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 5
+          timeoutSeconds: 30
         readinessProbe:
           tcpSocket:
             port: 5000

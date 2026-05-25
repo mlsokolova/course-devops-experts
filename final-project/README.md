@@ -11,7 +11,7 @@ Docker image and Kubernetes manifests for the QuakeWatch Flask app (namespace `f
 - [docker-compose.yml](docker-compose.yml) — runs the app locally on port 5000
 - [quakewatch.yaml](quakewatch.yaml) — `Deployment` and `NodePort` `Service` for the web app (probes on port 5000)
 - [cronjob-quakewath-check.yaml](cronjob-quakewath-check.yaml) — `CronJob` health check via `curl` to `/graph-earthquakes`
-- [components.yaml](components.yaml) — [metrics-server](https://github.com/kubernetes-sigs/metrics-server) v0.8.1 manifest with `--kubelet-insecure-tls` (for local clusters such as Docker Desktop);
+- [components.yaml](components.yaml) — [metrics-server](https://github.com/kubernetes-sigs/metrics-server) v0.8.1 manifest with `--kubelet-insecure-tls` (for local clusters such as Docker Desktop)
 
 ### `Quakewatch/`
 

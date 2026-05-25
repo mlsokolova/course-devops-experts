@@ -32,3 +32,19 @@ kubectl apply -f cronjob-quakewath-check.yaml
 `componets.yaml` v0.8.1 with `--kubelet-insecure-tls` is in the root folder
 3.`kubctl apply -f componets.yaml`
 4. wait
+5. check
+`kubectl top node` should return something like this:
+```
+NAME                    CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)
+desktop-control-plane   128m         0%       783Mi           5%
+desktop-worker          31m          0%       607Mi           3%
+```
+## Apply Horizontal Pod Autoscaler
+`kubectl apply -f hpa-quakewatch.yaml`
+
+## Test Horizontal Pod Autoscaler
+1. Run Apache HTTP server benchmarking tool
+`kubectl run quakewatch-benchmark -it --rm --restart=Never --image=httpd:2.4 -- ab -n 100 -c 20 -s 60 http://quakewatch:5000/graph-earthquakes`
+(100 request to the heavies page of the QuakeWatch web app, 20 requests in parallel )
+2. watch events
+`kubectl get events`
