@@ -26,6 +26,6 @@ Flask application source (vendored from [QuakeWatch](https://github.com/EduardUs
 
 ### `docs/`
 
-- [1-Docker.md](docs/1-Docker.md) — Phase 1 documentation: build, run, compose, push image tag `1.0.0`
-- [2-Kubernetes.md](docs/2-Kubernetes.md) — Phase 2 documentation: create namespace, deploy app and CronJob
+- [1-Docker.md](docs/1-Docker.md) — Phase 1 documentation: build, run, compose, push image tag `2.0.0`
+- [2-Kubernetes.md](docs/2-Kubernetes.md) — Phase 2 documentation: create namespace, deploy app, CronJob, HPA, ConfigMap
 - [install-kubernetes-cluster.pdf](docs/install-kubernetes-cluster.pdf) — Docker Desktop Kubernetes install on Windows 11
