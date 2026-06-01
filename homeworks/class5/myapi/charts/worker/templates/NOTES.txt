@@ -1,0 +1,2 @@
+Container run the command: 
+{{.Values.containerCommand}} {{.Values.containerArgs}}
