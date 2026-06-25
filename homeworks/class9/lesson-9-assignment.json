@@ -265,7 +265,7 @@
           "refId": "A"
         }
       ],
-      "title": "New panel",
+      "title": "Task 3: Network Throughput (Mbps)",
       "type": "timeseries"
     }
   ],
@@ -283,5 +283,5 @@
   "timezone": "browser",
   "title": "lesson-9-assignment",
   "uid": "adx9c86",
-  "version": 11
+  "version": 12
 }
