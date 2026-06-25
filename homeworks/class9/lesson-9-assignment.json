@@ -22,19 +22,6 @@
   "links": [],
   "panels": [
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 2,
-      "panels": [],
-      "title": "Part 1: Infrastructure Metrics",
-      "type": "row"
-    },
-    {
       "datasource": {
         "type": "prometheus",
         "uid": "cfq0w3m0tmhoge"
@@ -66,10 +53,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 6,
+        "w": 7,
         "x": 0,
-        "y": 1
+        "y": 0
       },
       "id": 1,
       "options": {
@@ -103,6 +90,88 @@
       ],
       "title": "Task 1: CPU Utilization %",
       "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cfq0w3m0tmhoge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 7,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "displayMode": "gradient",
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "avg by (node) (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Task 2: Memory Saturation",
+      "type": "bargauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 2,
+      "panels": [],
+      "title": "Part 1: Infrastructure Metrics",
+      "type": "row"
     }
   ],
   "preload": false,
@@ -119,5 +188,5 @@
   "timezone": "browser",
   "title": "lesson-9-assignment",
   "uid": "adx9c86",
-  "version": 6
+  "version": 9
 }
