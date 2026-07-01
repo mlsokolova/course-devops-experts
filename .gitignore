@@ -3,3 +3,7 @@ __pycache__/
 *.py[cod]
 Quakewatch/logs/
 *.tgz
+*.pdf
+earthquakes.duckdb
+data-tools
+*.parquet
