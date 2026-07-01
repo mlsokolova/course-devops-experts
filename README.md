@@ -31,9 +31,14 @@ Flask application source (vendored from [QuakeWatch](https://github.com/EduardUs
 - [2-Kubernetes.md](docs/2-Kubernetes.md) — Phase 2 documentation: create namespace, deploy app, CronJob, HPA, ConfigMap
 - [install-kubernetes-cluster.pdf](docs/install-kubernetes-cluster.pdf) — Docker Desktop Kubernetes install on Windows 11
 
-## `seed-data/`  
+## Seed data  
 Data from Kaggle dataset [All the Earthquakes Dataset : from 1990-2023](https://www.kaggle.com/datasets/alessandrolobello/the-ultimate-earthquake-dataset-from-1990-2023) in parquet format, for statistics over time period.  
 [DuckDB Quack](https://duckdb.org/docs/current/quack/overview) will be used to separate data service.  
+### download  seed data  
+gdown should be installed with using `pip`  
+```
+gdown https://drive.google.com/uc?id=12iG4h8tdYXJCPwYz8EMzBScbPioq5Evv
+```
 ### on data service  
 ```
 import duckdb  
