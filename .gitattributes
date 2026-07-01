@@ -1,0 +1,1 @@
+final-project/seed-data/Earthquakes-1990-2023.parquet filter=lfs diff=lfs merge=lfs -text
