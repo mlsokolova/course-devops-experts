@@ -64,5 +64,23 @@ conn = duckdb.connect(":memory:")
 conn.sql("from quack_query('quack:localhost', 'select * from main.earthquakes limit 1', token='3DCA7EE39EEF5309959AF0DC07C1FA75')")  
 ```
 
+# DuckDB services
+## Pre-conditions  
+- use Kubernetes Secrets for the Quack token. 
+- enrich Quakewatch with analytics that can be interesting to understand charactiristics of the seismic activity in the selected area.  
+## 
+- mean value of eartmagnitude over period from ... to ...
+- average time period between earthquakes
+- information about the earthquake with highest magnitude
+## Dataset
+Kaggle, [All the Earthquakes Dataset : from 1990-2023](https://www.kaggle.com/datasets/alessandrolobello/
+Observation period:
+## Why DuckDB?
+- good trade-off between complexity and performance
+- has Quack, protocol for remote access. It can provide classic separation between database.
+## DuckDB CLI official image limitation
+Official image: https://hub.docker.com/r/duckdb/duckdb/
+DuckDB official image is for CLI not for service
+
 
 

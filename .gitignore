@@ -6,3 +6,4 @@ Quakewatch/logs/
 *.pdf
 earthquakes.duckdb
 data-tools
+logs

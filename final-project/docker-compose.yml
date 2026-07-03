@@ -10,3 +10,27 @@ services:
     environment:
       MPLCONFIGDIR: /tmp/matplotlib
       QUAKEWATCH__LOG_PATH: /tmp/logs
+  duckdb:
+    image: mlsokolova/quakewatch
+    container_name: duckdb
+    ports:
+      - "5001:5000"
+      - "9494:9494"
+    environment:
+      QUACK__TOKEN: my-secret-token
+      DUCKDB__PATH: /data/earthquakes.duckdb
+      QUACK__PORT: 9494
+    volumes:
+      - duckdb-data:/data
+    entrypoint:
+      - python
+      - duckdb-quack-service.py
+volumes:
+  duckdb-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./seed-data
+      o: bind
+    
+
