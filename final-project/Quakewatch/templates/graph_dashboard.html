@@ -25,11 +25,33 @@
 </form>
 
 <hr>
+<h2>Earthquake Statistics for {{ current_location }} Area</h2>
+<div class="row mb-5">
+  <div class="col-md-4">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Max Earthquake</h5>
+        <p class="card-text">{{ max_earthquake }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Earthquakes Statistics</h5>
+        <p class="card-text">{{ earthquakes_stats }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
 <h2>Graph for Selected Region ({{ current_location }})</h2>
 <p>Showing data for last {{ days }} days</p>
 <div class="text-center mb-5">
   <img src="{{ url_for('dashboard.graph_earthquakes_image') }}?days={{ days }}&location={{ current_location }}" alt="Earthquake Graph" class="img-fluid">
 </div>
+
 
 <hr>
 <h3>5-Year View for {{ current_location }}</h3>

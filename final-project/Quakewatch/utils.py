@@ -6,10 +6,11 @@ from collections import defaultdict
 
 # Country configuration
 COUNTRIES = {
-    "Tel Aviv, Israel": {"lat": 32.0853, "lon": 34.7818, "radius": 100},
+    "Tel Aviv, Israel": {"lat": 32.0853, "lon": 34.7818, "radius": 300},
     "United States (California)": {"lat": 36.7783, "lon": -119.4179, "radius": 300},
     "Japan": {"lat": 36.2048, "lon": 138.2529, "radius": 300},
-    "Indonesia": {"lat": -0.7893, "lon": 113.9213, "radius": 300},
+    #"Indonesia": {"lat": -0.7893, "lon": 113.9213, "radius": 300},
+    "Indonesia": {"lat": -1.5000, "lon": 99.5000, "radius": 300},
     "Chile": {"lat": -35.6751, "lon": -71.5430, "radius": 300}
 }
 

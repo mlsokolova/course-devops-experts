@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, jsonify, request, send_file, curre
 from utils import generate_graph, get_top_earthquakes, get_last_earthquake, COUNTRIES
 from datetime import datetime, timedelta
 import requests
+from quakestats import QuakeStats
 
 dashboard_blueprint = Blueprint('dashboard', __name__)
 
@@ -101,6 +102,14 @@ class EarthquakeDashboard:
         location = COUNTRIES.get(loc_name, COUNTRIES["Tel Aviv, Israel"])
         img = generate_graph(days, location["lat"], location["lon"], location["radius"], title_suffix="(5 Years)")
         return send_file(img, mimetype='image/png')
+    
+    
+    def get_quake_stats(loc_name):
+        location = COUNTRIES.get(loc_name)
+        latitude =  location["lat"]
+        longitude = location["lon"]
+        radius = location["radius"]
+        return QuakeStats(latitude, longitude, radius)
 
     @staticmethod
     @dashboard_blueprint.route('/graph-earthquakes')
@@ -109,12 +118,16 @@ class EarthquakeDashboard:
         loc_name = request.args.get('location', "Tel Aviv, Israel")
         top_events = get_top_earthquakes(limit=5)
         last_event = get_last_earthquake()
-
+        stats = EarthquakeDashboard.get_quake_stats(loc_name)
         return render_template('graph_dashboard.html',
                                days=days,
                                current_location=loc_name,
                                countries=list(COUNTRIES.keys()),
                                top_events=top_events,
-                               last_event=last_event)
+                               last_event=last_event,
+                               stats=stats.stats,
+                               max_earthquake=stats.max_earthquake,
+                               earthquakes_stats=stats.stats
+                               )
 
 # The static methods in EarthquakeDashboard register the routes automatically.
