@@ -7,7 +7,7 @@ QUACK__TOKEN = os.getenv("QUACK__TOKEN")
 QUACK__PORT = os.getenv("QUACK__PORT")
 
 conn = duckdb.connect(DUCKDB__PATH, read_only=True)  
-conn.sql("install spatial;load spatial;")
+conn.sql("load spatial;")
 conn.sql(f"CALL quack_serve('quack:0.0.0.0:{QUACK__PORT}',  token='{QUACK__TOKEN}', allow_other_hostname => true, disable_ssl=true);")  
 
 

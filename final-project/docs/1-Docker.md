@@ -11,7 +11,7 @@ Application source lives in **`Quakewatch/`** (vendored copy of the upstream rep
 
 ## Build the image
 
-From this directory (`phase-1/`):
+From the directory (`final-project`):
 
 ```bash
 docker build -t mlsokolova/quakewatch .
@@ -39,8 +39,8 @@ Compose builds the same image, maps port **5000**, and mounts a **`tmpfs`** on `
 
 ## Push to Docker Hub  
 ```
-docker tag mlsokolova/quakewatch mlsokolova/quakewatch:2.0.0
-docker push mlsokolova/quakewatch:2.0.0
+docker tag mlsokolova/quakewatch mlsokolova/quakewatch:3.0.0
+docker push mlsokolova/quakewatch:3.0.0
 ```
 
 ## Project layout
