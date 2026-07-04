@@ -10,7 +10,7 @@ print(DUCKDB__PATH)
 
 conn = duckdb.connect(DUCKDB__PATH, read_only=True)  
 #conn.sql("force install quack from core_nightly; load quack")  
-conn.sql(f"CALL quack_serve('quack:0.0.0.0:{QUACK__PORT}', token='{QUACK__TOKEN}', allow_other_hostname => true);")  
+conn.sql(f"CALL quack_serve('quack:0.0.0.0:{QUACK__PORT}',  token='{QUACK__TOKEN}', allow_other_hostname => true, disable_ssl=true);")  
 
 
 app = Flask(__name__)    

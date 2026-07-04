@@ -45,7 +45,7 @@ import duckdb
 conn = duckdb.connect("seed-data/earthquakes.duckdb")  
 conn.sql("create table earthquakes as select * from 'seed-data/Earthquakes-1990-2023.parquet'")  
 duckdb.sql("force install quack from core_nightly; load quack")  
-conn.sql("CALL quack_serve('quack:0.0.0.0:9494', allow_other_hostname => true);")  
+conn.sql("CALL quack_serve('quack:0.0.0.0:9494', allow_other_hostname => true, disable_ssl=>true);")  
 ```
 expected output should be like this:  
 ```
@@ -61,7 +61,7 @@ expected output should be like this:
 ```
 import duckdb  
 conn = duckdb.connect(":memory:")  
-conn.sql("from quack_query('quack:localhost', 'select * from main.earthquakes limit 1', token='3DCA7EE39EEF5309959AF0DC07C1FA75')")  
+conn.sql("from quack_query('quack:duckdb', 'select * from main.earthquakes limit 1', token='3DCA7EE39EEF5309959AF0DC07C1FA75', disable_ssl=>true)")  
 ```
 
 # DuckDB services
