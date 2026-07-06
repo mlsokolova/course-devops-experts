@@ -8,11 +8,10 @@ terraform {
     }
   }
 }
-
 #############################################
-# Configuration from ~/.aws are used
+# Configuration from ~/.aws are used 
 # to provide creds to AWS.
-# AWS Account are provided with the following
+# AWS Account are provided with the following 
 # Managed Polycies:
 # - AmazonEC2FullAccess
 # - IAMFullAccess
@@ -102,6 +101,12 @@ resource "aws_instance" "class10-instance" {
     Name = local.instance_name,
     Environment = "learn"
   }
+}
+
+# Part 2: enforce the stopped state immediately after creation
+resource "aws_ec2_instance_state" "class10-instance-state" {
+  instance_id = aws_instance.class10-instance.id
+  state       = "stopped"
 }
 
 output "ip" {
