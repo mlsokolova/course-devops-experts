@@ -7,3 +7,5 @@ Quakewatch/logs/
 earthquakes.duckdb
 data-tools
 logs
+.terraform*
+terraform.tfstate*
