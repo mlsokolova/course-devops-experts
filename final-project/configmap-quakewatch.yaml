@@ -5,3 +5,7 @@ metadata:
   namespace: final-project
 data:
   QUAKEWATCH__LOG_PATH: /tmp/logs
+  MPLCONFIGDIR: /tmp/matplotlib
+  DUCKDB__PATH: /data/earthquakes.duckdb
+  QUACK__HOST: duckdb
+  QUACK__PORT: "9494"
