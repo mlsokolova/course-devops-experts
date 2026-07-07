@@ -58,18 +58,18 @@ Environment variables (double underscore convention):
 | [Dockerfile](Dockerfile) | Builds `mlsokolova/quakewatch` from `python:3.11-slim` and `Quakewatch/` |
 | [docker-compose.yml](docker-compose.yml) | Runs `quakewatch` (port 5000) and `duckdb` (ports 5001, 9494) with shared seed volume |
 
-### Root — Kubernetes
+### `kubernetes/`
 
 | File | Purpose |
 | ---- | ------- |
-| [quakewatch.yaml](quakewatch.yaml) | `Deployment` + `NodePort` `Service` for the web app; init container waits for DuckDB Quack |
-| [duckdb.yaml](duckdb.yaml) | `Deployment` + `ClusterIP` `Service` for DuckDB Quack; init container runs `seed_data.py` |
-| [configmap-quakewatch.yaml](configmap-quakewatch.yaml) | Non-sensitive config (`QUAKEWATCH__LOG_PATH`, `MPLCONFIGDIR`, `QUACK__HOST`, `QUACK__PORT`, `DUCKDB__PATH`) |
-| [secret-quakewatch.yaml](secret-quakewatch.yaml) | `QUACK__TOKEN` |
-| [pv-duckdb.yaml](pv-duckdb.yaml) | `PersistentVolume` + `PersistentVolumeClaim` for `/data` (DuckDB file) |
-| [cronjob-quakewath-check.yaml](cronjob-quakewath-check.yaml) | `CronJob` health check via `curl` to `/graph-earthquakes` |
-| [hpa-quakewatch.yaml](hpa-quakewatch.yaml) | Horizontal Pod Autoscaler for `quakewatch` |
-| [components.yaml](components.yaml) | [metrics-server](https://github.com/kubernetes-sigs/metrics-server) v0.8.1 with `--kubelet-insecure-tls` (local clusters) |
+| [quakewatch.yaml](kubernetes/quakewatch.yaml) | `Deployment` + `NodePort` `Service` for the web app; init container waits for DuckDB Quack |
+| [duckdb.yaml](kubernetes/duckdb.yaml) | `Deployment` + `ClusterIP` `Service` for DuckDB Quack; init container runs `seed_data.py` |
+| [configmap-quakewatch.yaml](kubernetes/configmap-quakewatch.yaml) | Non-sensitive config (`QUAKEWATCH__LOG_PATH`, `MPLCONFIGDIR`, `QUACK__HOST`, `QUACK__PORT`, `DUCKDB__PATH`) |
+| [secret-quakewatch.yaml](kubernetes/secret-quakewatch.yaml) | `QUACK__TOKEN` |
+| [pv-duckdb.yaml](kubernetes/pv-duckdb.yaml) | `PersistentVolume` + `PersistentVolumeClaim` for `/data` (DuckDB file) |
+| [cronjob-quakewath-check.yaml](kubernetes/cronjob-quakewath-check.yaml) | `CronJob` health check via `curl` to `/graph-earthquakes` |
+| [hpa-quakewatch.yaml](kubernetes/hpa-quakewatch.yaml) | Horizontal Pod Autoscaler for `quakewatch` |
+| [components.yaml](kubernetes/components.yaml) | [metrics-server](https://github.com/kubernetes-sigs/metrics-server) v0.8.1 with `--kubelet-insecure-tls` (local clusters) |
 
 ### `Quakewatch/`
 
@@ -95,21 +95,23 @@ Environment variables (double underscore convention):
 
 | File | Purpose |
 | ---- | ------- |
-| [1-Docker.md](docs/1-Docker.md) | Phase 1: build, run, compose, push image tag `3.0.0` |
+| [1-Docker.md](docs/1-Docker.md) | Phase 1: build, run, compose, push image tag `3.1.0` |
 | [2-Kubernetes.md](docs/2-Kubernetes.md) | Phase 2: namespace, ConfigMap, Secret, PV, DuckDB + QuakeWatch deploy, CronJob, HPA |
 | [install-kubernetes-cluster.pdf](docs/install-kubernetes-cluster.pdf) | Docker Desktop Kubernetes on Windows 11 |
 
 ## Quick start — Kubernetes
 
+Run from the `final-project` directory:
+
 ```bash
 kubectl create ns final-project
 kubectl config set-context --current --namespace=final-project
 
-kubectl apply -f configmap-quakewatch.yaml
-kubectl apply -f secret-quakewatch.yaml
-kubectl apply -f pv-duckdb.yaml
-kubectl apply -f duckdb.yaml
-kubectl apply -f quakewatch.yaml
+kubectl apply -f kubernetes/configmap-quakewatch.yaml
+kubectl apply -f kubernetes/secret-quakewatch.yaml
+kubectl apply -f kubernetes/pv-duckdb.yaml
+kubectl apply -f kubernetes/duckdb.yaml
+kubectl apply -f kubernetes/quakewatch.yaml
 ```
 
-Image tag: `mlsokolova/quakewatch:3.0.0`
+Image tag: `mlsokolova/quakewatch:3.1.0`

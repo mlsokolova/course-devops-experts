@@ -2,7 +2,9 @@
 
 This phase deploys the customized QuakeWatch stack on Kubernetes: the Flask web app (`quakewatch`) and the DuckDB Quack server (`duckdb`). The web app queries USGS for live graphs and uses `quakestats.py` to fetch historical statistics from DuckDB over the Quack protocol.
 
-Image: `mlsokolova/quakewatch:3.0.0` (namespace `final-project`).
+Image: `mlsokolova/quakewatch:3.1.0` (namespace `final-project`).
+
+All manifests live in the [`kubernetes/`](../kubernetes/) folder. Run `kubectl` commands below from the `final-project` directory.
 
 ## Set up the cluster
 
@@ -14,8 +16,8 @@ kubectl config set-context --current --namespace=final-project
 ## Run the dockerized web app as a pod (optional smoke test)
 
 ```bash
-docker pull mlsokolova/quakewatch:3.0.0
-kubectl run quakewatch --image=mlsokolova/quakewatch:3.0.0
+docker pull mlsokolova/quakewatch:3.1.0
+kubectl run quakewatch --image=mlsokolova/quakewatch:3.1.0
 ```
 
 This runs only the Flask container without DuckDB. Pages that depend on `QuakeStats` (for example `/graph-earthquakes`) need the full stack below.
@@ -25,23 +27,23 @@ This runs only the Flask container without DuckDB. Pages that depend on `QuakeSt
 Apply shared config before the workloads:
 
 ```bash
-kubectl apply -f configmap-quakewatch.yaml
-kubectl apply -f secret-quakewatch.yaml
-kubectl apply -f pv-duckdb.yaml
+kubectl apply -f kubernetes/configmap-quakewatch.yaml
+kubectl apply -f kubernetes/secret-quakewatch.yaml
+kubectl apply -f kubernetes/pv-duckdb.yaml
 ```
 
 | Manifest | Kind | Purpose |
 | -------- | ---- | ------- |
-| `configmap-quakewatch.yaml` | ConfigMap | `QUAKEWATCH__LOG_PATH`, `MPLCONFIGDIR`, `QUACK__HOST`, `QUACK__PORT`, `DUCKDB__PATH` |
-| `secret-quakewatch.yaml` | Secret | `QUACK__TOKEN` (shared by `quakewatch` and `duckdb`) |
-| `pv-duckdb.yaml` | PV + PVC | Persistent storage for `/data/earthquakes.duckdb` |
+| `kubernetes/configmap-quakewatch.yaml` | ConfigMap | `QUAKEWATCH__LOG_PATH`, `MPLCONFIGDIR`, `QUACK__HOST`, `QUACK__PORT`, `DUCKDB__PATH` |
+| `kubernetes/secret-quakewatch.yaml` | Secret | `QUACK__TOKEN` (shared by `quakewatch` and `duckdb`) |
+| `kubernetes/pv-duckdb.yaml` | PV + PVC | Persistent storage for `/data/earthquakes.duckdb` |
 
-The PVC `duckdb-data` uses a `hostPath` volume at `/data/duckdb` on the node. On Docker Desktop you may need to copy `seed-data/` there, or adjust the `hostPath` in `pv-duckdb.yaml` to point at your local folder.
+The PVC `duckdb-data` uses a `hostPath` volume at `/data/duckdb` on the node. On Docker Desktop you may need to copy `seed-data/` there, or adjust the `hostPath` in `kubernetes/pv-duckdb.yaml` to point at your local folder.
 
 ## Deploy DuckDB
 
 ```bash
-kubectl apply -f duckdb.yaml
+kubectl apply -f kubernetes/duckdb.yaml
 ```
 
 The `duckdb` Deployment includes:
@@ -59,7 +61,7 @@ kubectl logs -l app=duckdb -c seed-data
 ## Deploy QuakeWatch
 
 ```bash
-kubectl apply -f quakewatch.yaml
+kubectl apply -f kubernetes/quakewatch.yaml
 ```
 
 The `quakewatch` Deployment includes:
@@ -85,7 +87,7 @@ Then visit [http://127.0.0.1:5000/graph-earthquakes](http://127.0.0.1:5000/graph
 ## Run the CronJob
 
 ```bash
-kubectl apply -f cronjob-quakewath-check.yaml
+kubectl apply -f kubernetes/cronjob-quakewath-check.yaml
 ```
 
 Periodic health check via `curl` to `/graph-earthquakes` (exercises both Flask and DuckDB).
@@ -98,12 +100,12 @@ Periodic health check via `curl` to `/graph-earthquakes` (exercises both Flask a
    wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.1/components.yaml
    ```
 
-2. For local clusters (Docker Desktop), add `--kubelet-insecure-tls` to the container `args` section. The root [`components.yaml`](../components.yaml) already includes this flag.
+2. For local clusters (Docker Desktop), add `--kubelet-insecure-tls` to the container `args` section. [`kubernetes/components.yaml`](../kubernetes/components.yaml) already includes this flag.
 
 3. Apply:
 
    ```bash
-   kubectl apply -f components.yaml
+   kubectl apply -f kubernetes/components.yaml
    ```
 
 4. Wait a minute, then check:
@@ -123,7 +125,7 @@ Periodic health check via `curl` to `/graph-earthquakes` (exercises both Flask a
 ## Apply Horizontal Pod Autoscaler
 
 ```bash
-kubectl apply -f hpa-quakewatch.yaml
+kubectl apply -f kubernetes/hpa-quakewatch.yaml
 ```
 
 ## Test Horizontal Pod Autoscaler
@@ -147,25 +149,25 @@ kubectl apply -f hpa-quakewatch.yaml
 
 | File | Resources |
 | ---- | --------- |
-| `configmap-quakewatch.yaml` | ConfigMap |
-| `secret-quakewatch.yaml` | Secret |
-| `pv-duckdb.yaml` | PersistentVolume, PersistentVolumeClaim |
-| `duckdb.yaml` | Deployment, Service (`duckdb`) |
-| `quakewatch.yaml` | Deployment, Service (`quakewatch`) |
-| `cronjob-quakewath-check.yaml` | CronJob |
-| `hpa-quakewatch.yaml` | HorizontalPodAutoscaler |
-| `components.yaml` | metrics-server (cluster-wide) |
+| `kubernetes/configmap-quakewatch.yaml` | ConfigMap |
+| `kubernetes/secret-quakewatch.yaml` | Secret |
+| `kubernetes/pv-duckdb.yaml` | PersistentVolume, PersistentVolumeClaim |
+| `kubernetes/duckdb.yaml` | Deployment, Service (`duckdb`) |
+| `kubernetes/quakewatch.yaml` | Deployment, Service (`quakewatch`) |
+| `kubernetes/cronjob-quakewath-check.yaml` | CronJob |
+| `kubernetes/hpa-quakewatch.yaml` | HorizontalPodAutoscaler |
+| `kubernetes/components.yaml` | metrics-server (cluster-wide) |
 
 ## Teardown
 
 Delete resources in reverse order of deployment:
 
 ```bash
-kubectl delete -f hpa-quakewatch.yaml
-kubectl delete -f cronjob-quakewath-check.yaml
-kubectl delete -f quakewatch.yaml
-kubectl delete -f duckdb.yaml
-kubectl delete -f pv-duckdb.yaml
-kubectl delete -f secret-quakewatch.yaml
-kubectl delete -f configmap-quakewatch.yaml
+kubectl delete -f kubernetes/hpa-quakewatch.yaml
+kubectl delete -f kubernetes/cronjob-quakewath-check.yaml
+kubectl delete -f kubernetes/quakewatch.yaml
+kubectl delete -f kubernetes/duckdb.yaml
+kubectl delete -f kubernetes/pv-duckdb.yaml
+kubectl delete -f kubernetes/secret-quakewatch.yaml
+kubectl delete -f kubernetes/configmap-quakewatch.yaml
 ```

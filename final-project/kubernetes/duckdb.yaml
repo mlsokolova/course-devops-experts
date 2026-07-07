@@ -32,7 +32,7 @@ spec:
         - name: duckdb-data
           mountPath: /data
       containers:
-      - image: mlsokolova/quakewatch:3.0.0
+      - image: mlsokolova/quakewatch:3.1.0
         name: duckdb
         command:
         - python
