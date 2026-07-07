@@ -96,3 +96,13 @@ helm template quakewatch ./helm -n final-project
 ## Relation to `kubernetes/`
 
 The flat manifests in `kubernetes/` remain available for step-by-step learning (see [2-Kubernetes.md](2-Kubernetes.md)). The Helm chart is equivalent for deployment; prefer one approach per environment to avoid duplicate resources.
+
+## Pack and publish to the Docker Hub artifact repository 
+```
+helm package ./helm
+helm push quakewatch-0.1.0.tgz oci://registry-1.docker.io/mlsokolova
+```
+## Install from Docker Hub  
+```
+helm upgrade -i quakewatch oci://registry-1.docker.io/mlsokolova/quakewatch --version 0.1.0 --set metricsServer.enabled=true
+``
