@@ -139,6 +139,16 @@ Environment variables (double underscore convention):
 | [Dockerfile](Dockerfile) | Builds `mlsokolova/quakewatch` from `python:3.11-slim` and `Quakewatch/` |
 | [docker-compose.yml](docker-compose.yml) | Runs `quakewatch` (port 5000) and `duckdb` (ports 5001, 9494) with shared seed volume |
 
+### `helm/`
+
+| File | Purpose |
+| ---- | ------- |
+| [Chart.yaml](helm/Chart.yaml) | Helm chart metadata |
+| [values.yaml](helm/values.yaml) | Default configuration for all templates |
+| [templates/](helm/templates/) | Templated manifests (equivalent to `kubernetes/`) |
+
+Install: `helm install quakewatch ./helm -n final-project --create-namespace` — see [3-Helm.md](docs/3-Helm.md).
+
 ### `kubernetes/`
 
 | File | Purpose |
@@ -178,6 +188,7 @@ Environment variables (double underscore convention):
 | ---- | ------- |
 | [1-Docker.md](docs/1-Docker.md) | Phase 1: build, run, compose, push image tag `3.1.0` |
 | [2-Kubernetes.md](docs/2-Kubernetes.md) | Phase 2: namespace, ConfigMap, Secret, PV, DuckDB + QuakeWatch deploy, CronJob, HPA |
+| [3-Helm.md](docs/3-Helm.md) | Phase 3: Helm chart install, upgrade, uninstall |
 | [install-kubernetes-cluster.pdf](docs/install-kubernetes-cluster.pdf) | Docker Desktop Kubernetes on Windows 11 |
 
 ## Quick start — Kubernetes
