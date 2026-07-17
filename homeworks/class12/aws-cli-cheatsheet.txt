@@ -1,0 +1,2 @@
+# describe dynamodb table
+aws dynamodb describe-table --table-name myTable
