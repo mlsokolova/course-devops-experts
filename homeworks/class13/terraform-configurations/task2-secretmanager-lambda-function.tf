@@ -1,16 +1,16 @@
 locals {
-  lambda_function_name = "class13-read-secret-password"
+  secretmanager_lambda_function_name = "class13-read-secret-password"
 }
 
-module "lambda_function" {
+module "secretmanager_lambda_function" {
   source  = "terraform-aws-modules/lambda/aws"
   version = "~> 8.0"
 
-  function_name = local.lambda_function_name
+  function_name = local.secretmanager_lambda_function_name
   description   = "Read the secret, print its length"
 
   runtime = "python3.11"
-  handler = "lambda_function.lambda_handler"
+  handler = "secretmanager_lambda_function.lambda_handler"
 
   # The module packages the files from this directory into a ZIP archive.
   source_path = "${path.module}/src"
@@ -40,6 +40,6 @@ module "lambda_function" {
   cloudwatch_logs_retention_in_days = 7
 
   tags = {
-    Name = local.lambda_function_name
+    Name = local.secretmanager_lambda_function_name
   }
 }

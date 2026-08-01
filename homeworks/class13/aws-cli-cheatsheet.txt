@@ -1,0 +1,9 @@
+aws cloudwatch put-metric-alarm \
+    --alarm-name "LambdaDurationThresholdExceed" \
+    --metric-name "Duration" \
+    --namespace "AWS/Lambda" \
+    --statistic "Average" \
+    --period 60 \
+    --evaluation-periods 1 \
+    --comparison-operator "GreaterThanOrEqualToThreshold" \
+    --threshold 10

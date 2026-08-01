@@ -26,10 +26,10 @@ resource "aws_cloudwatch_metric_alarm" "lambda-invocations-threshold-exceed" {
   alarm_name                = "LambdaInvocationsThresholdExceed"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = 1
-  metric_name               = "Duration"
+  metric_name               = "Invocations"
   namespace                 = "AWS/Lambda"
   period                    = 60
-  statistic                 = "Average"
+  statistic                 = "Sum"
   threshold                 = 5
   alarm_description         = "This metric monitors lambda invocations"
 }
