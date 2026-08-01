@@ -10,3 +10,4 @@ logs
 .terraform*
 terraform.tfstate*
 builds
+.ipynb_checkpoints
