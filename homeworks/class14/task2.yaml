@@ -1,0 +1,16 @@
+---
+- hosts: servers
+  vars:
+    output_filename: /tmp/{{ inventory_hostname }}-info.txt
+
+  tasks:
+  - name: write current date, hostname and linux distribution to file
+    shell: |
+      date > {{ output_filename }}
+      hostname >> {{ output_filename }}
+      cat /etc/issue >> {{ output_filename }}
+
+  - name: fetch output files
+    fetch:
+      src: "{{ output_filename }}"
+      dest: "/tmp/fetched/"
