@@ -1,0 +1,12 @@
+---
+- hosts: servers
+
+  tasks:
+  - name: get linux distribution
+    command: cat /etc/issue
+    register: linux_distribution
+
+  - name: print linux distribution
+    debug:
+      msg: "{{ linux_distribution.stdout }}"
+
